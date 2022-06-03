@@ -5,6 +5,9 @@
 // @description  Quick Patrol in MediaWiki
 // @author       Milkory
 // @match        *://*.huijiwiki.com/*
+// @match        *://*.fandom.com/*
+// @match        *://*.wikipedia.org/*
+// @license      MIT
 // @grant        none
 // ==/UserScript==
 
@@ -48,8 +51,8 @@
                     .attr('title', 'Successfully partolled');
                 },
                 function () {
-                  console.log(`[QuickPatrol] 巡查失败 (revid: ${value})`);
-                  $(this).text('!').css('color', 'red').attr('title', 'Click to partol');
+                  console.log(`[QuickPatrol] FAILED (revid: ${value})`);
+                  me.text('!').css('color', 'red').attr('title', 'Click to partol');
                 }
               );
             }
@@ -68,7 +71,7 @@
         format: 'json',
       })
       .done(function (data) {
-        console.log(`[QuickPatrol] 尝试巡查 (revid: ${revid})`);
+        console.log(`[QuickPatrol] TRYING (revid: ${revid})`);
         mwApi
           .post({
             action: 'patrol',
@@ -77,7 +80,7 @@
             format: 'json',
           })
           .done(function () {
-            console.log(`[QuickPatrol] 巡查成功 (revid: ${revid})`);
+            console.log(`[QuickPatrol] SUCCESS (revid: ${revid})`);
             successFallback();
           })
           .fail(failFallback);
