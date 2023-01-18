@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quick Patrol
 // @namespace    http://rabbi.town/
-// @version      0.1
+// @version      0.3
 // @description  Quick Patrol in MediaWiki
 // @author       Milkory
 // @match        *://*.huijiwiki.com/*
@@ -19,6 +19,7 @@
   window.addEventListener('load', init, false);
 
   async function init() {
+    console.log('[QuickPatrol] Initialising...');
     mwApi = new mw.Api();
     let rights = (
       await mwApi.get({
@@ -29,7 +30,7 @@
     ).query.userinfo.rights;
 
     if (rights.includes('patrol')) {
-      $('.mw-changeslist-unpatrolled').attr('data-mw-revid', function (_i, value) {
+      $('.mw-changeslist-reviewstatus-unpatrolled').attr('data-mw-revid', function (_i, value) {
         $(this)
           .find('.unpatrolled')
           .css('cursor', 'pointer')
